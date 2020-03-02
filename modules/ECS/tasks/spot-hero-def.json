@@ -3,13 +3,12 @@
       "essential": true,
       "image": "${image}",
       "cpu":256,
-      "memory": 256,
+      "memory": 512,
       "name": "spothero-image",
       "networkMode": "awsvpc",
       "portMappings": [
         {
-          "containerPort": 80,
-          "hostPort": 80
+          "containerPort": 80
         }
       ]
     }

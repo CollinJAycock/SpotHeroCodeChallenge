@@ -74,7 +74,7 @@ resource "aws_security_group" "Spothero-Default-SecurityGroup" {
   depends_on  = [aws_vpc.SpotHero-VPC]
 
   ingress {
-    from_port = "0"zzz
+    from_port = "0"
     to_port   = "0"
     protocol  = "-1"
     self      = true

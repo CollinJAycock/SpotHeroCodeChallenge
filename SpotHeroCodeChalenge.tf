@@ -21,7 +21,7 @@ module "CodePipline" {
     region                     = "us-east-1"
     ecs_cluster_name           = module.ECS.cluster_name
     ecs_service_name           = module.ECS.service_name
-    GitHub_OAuth_Token         = "PUT YOUR GIT HUB TOKEN"
+    GitHub_OAuth_Token         = "93c93c0456812de569273a9f95a8ac30b9745d4e"
     run_task_subnet_id         = module.Networking.Spothero-public_subnets_id
     run_task_security_group_ids= [module.Networking.Spothero-Default-SecurityGroup_id]   
 }

@@ -62,12 +62,12 @@ resource "aws_ecs_cluster" "SpotHero-ECS-Cluster" {
 resource "aws_ecs_service" "SpotHero-ECS" {
   name            = "SpotHero_ECS"
   task_definition = aws_ecs_task_definition.SpotHero_ECS_Task.arn
-  desired_count   = 1
+  desired_count   = 2
   launch_type     = "FARGATE"
-  //iam_role        = "arn:aws:iam::353750335352:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
   depends_on      = [aws_iam_role.ecs_role,aws_lb.SpotHeroLoadBalancer,aws_lb_target_group.SpotHero_LoadBalance-TargetGroup]
   cluster         = aws_ecs_cluster.SpotHero-ECS-Cluster.id
-  
+  health_check_grace_period_seconds = 300
+
   network_configuration{
     subnets = var.subnet_ids
     security_groups = [aws_security_group.SpotHero-web-inbound-securityGroup.id]
@@ -128,6 +128,11 @@ resource "aws_lb_target_group" "SpotHero_LoadBalance-TargetGroup" {
   protocol = "HTTP"
   vpc_id   = var.vpc_id
   target_type = "ip"
+  
+  health_check{
+    interval = 300
+    matcher = "200-299"
+  }
 
     lifecycle {
     create_before_destroy = true
