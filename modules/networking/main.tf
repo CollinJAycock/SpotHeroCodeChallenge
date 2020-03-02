@@ -23,20 +23,6 @@ resource "aws_internet_gateway" "SpotHero-gateway" {
   }
 }
 
-//Simple NAT
-/*
-resource "aws_nat_gateway" "SpotHero-nat" {
-  allocation_id = aws_eip.nat_eip.id
-  subnet_id     = element(aws_subnet.SpotHero-subnet-Public.*.id, 0)
-  depends_on    = [aws_internet_gateway.SpotHero-gateway]
-}
-
-resource "aws_eip" "nat_eip" {
-  vpc        = true
-  depends_on = [aws_internet_gateway.SpotHero-gateway]
-}
-*/
-
 //Public Subnet
 resource "aws_subnet" "SpotHero-subnet-Public1" {
   vpc_id     = aws_vpc.SpotHero-VPC.id
@@ -81,43 +67,6 @@ resource "aws_route_table_association" "SpotHero-RouteTable-Public2" {
   route_table_id = aws_route_table.SpotHero-RouteTable-Public.id
 }
 
-
-//Private Subnet
-/*
-resource "aws_subnet" "SpotHero-subnet-Private1" {
-  vpc_id     = aws_vpc.SpotHero-VPC.id
-  cidr_block = "10.0.2.0/24"
-  availability_zone = data.aws_availability_zones.available.names[1]
-
-  tags = {
-    Name = "SpotHero-subnet-Private1"
-  }
-}
-
-resource "aws_route_table" "SpotHero-RouteTable-Private" {
-  vpc_id = aws_vpc.SpotHero-VPC.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.SpotHero-gateway.id
-  }
-
-  tags = {
-    Name = "main"
-  }
-}
-
-resource "aws_subnet" "SpotHero-subnet-Private2" {
-  vpc_id     = aws_vpc.SpotHero-VPC.id
-  cidr_block = "10.0.3.0/24"
-  availability_zone = data.aws_availability_zones.available.names[2]
-
-  tags = {
-    Name = "SpotHero-subnet-Private2"
-  }
-}
-*/
-
 resource "aws_security_group" "Spothero-Default-SecurityGroup" {
   name        = "Test-default-sg"
   description = "Default security group to allow inbound/outbound from the VPC"
@@ -125,7 +74,7 @@ resource "aws_security_group" "Spothero-Default-SecurityGroup" {
   depends_on  = [aws_vpc.SpotHero-VPC]
 
   ingress {
-    from_port = "0"
+    from_port = "0"zzz
     to_port   = "0"
     protocol  = "-1"
     self      = true
